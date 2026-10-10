@@ -1,12 +1,11 @@
 ﻿using Nase.Core.Lexing;
 using Nase.FrontEnd.Lexing;
 
-const string source = """
-CREATE TABLE dbo.Users (
-    Id INT NOT NULL,
-    Name NVARCHAR(100) NULL
-);
-""";
+var source = """
+             CREATE TABLE [Order Details] (
+                 Id INT NOT NULL
+             );
+             """;
 
 var lexer = new Lexer(source);
 var tokens = lexer.Tokenize();
