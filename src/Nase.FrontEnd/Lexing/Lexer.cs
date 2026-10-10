@@ -28,7 +28,8 @@ public sealed class Lexer
             ["VARCHAR"] = TokenKind.Varchar,
             ["NVARCHAR"] = TokenKind.Nvarchar,
             ["DECIMAL"] = TokenKind.Decimal,
-            ["DATETIME2"] = TokenKind.DateTime2
+            ["DATETIME2"] = TokenKind.DateTime2,
+            ["CONSTRAINT"]=TokenKind.Constraint
         };
 
     public Lexer(string source)

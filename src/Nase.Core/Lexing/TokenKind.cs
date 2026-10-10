@@ -21,7 +21,9 @@ public enum TokenKind
     Nvarchar,
     Decimal,
     DateTime2,
-
+    
+    Constraint,
+    
     LeftParenthesis,
     RightParenthesis,
     Comma,
