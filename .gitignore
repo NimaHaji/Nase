@@ -1,4 +1,7 @@
-﻿# Build output
+﻿# Generated output
+output/
+
+# Build output
 [Bb]in/
 [Oo]bj/
 artifacts/

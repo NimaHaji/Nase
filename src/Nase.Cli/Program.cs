@@ -1,25 +1,10 @@
-﻿using Nase.Core.Lexing;
-using Nase.FrontEnd.Lexing;
+﻿using Nase.Cli.Commands;
+using System.CommandLine;
 
-const string source = """
-CREATE TABLE dbo.Users (
-    Id INT NOT NULL,
-    Name NVARCHAR(100) NULL
-);
-""";
+var rootCommand = new RootCommand(
+    "Nase — Database Schema Compiler");
 
-var lexer = new Lexer(source);
-var tokens = lexer.Tokenize();
+rootCommand.Subcommands.Add(CheckCommand.Create());
+rootCommand.Subcommands.Add(DiagramCommand.Create());
 
-foreach (Token token in tokens)
-{
-    Console.WriteLine(
-        $"{token.Line}:{token.Column} " +
-        $"{token.Kind,-18} {token.Lexeme}");
-
-    if (token.Kind == TokenKind.Unknown)
-    {
-        Console.Error.WriteLine(
-            $"Unknown token at {token.Line}:{token.Column}.");
-    }
-}
+return await rootCommand.Parse(args).InvokeAsync();

@@ -1,17 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\Nase.Core\Nase.Core.csproj" />
-    <ProjectReference Include="..\Nase.FrontEnd\Nase.FrontEnd.csproj" />
-    <ProjectReference Include="..\Nase.SqlServer\Nase.SqlServer.csproj" />
-    <ProjectReference Include="..\Nase.Diagrams\Nase.Diagrams.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Nase.Core\Nase.Core.csproj" />
+        <ProjectReference Include="..\Nase.FrontEnd\Nase.FrontEnd.csproj" />
+        <ProjectReference Include="..\Nase.SqlServer\Nase.SqlServer.csproj" />
+        <ProjectReference Include="..\Nase.Diagrams\Nase.Diagrams.csproj" />
+        <ProjectReference Include="..\Nase.CodeGen.Svg\Nase.CodeGen.Svg.csproj" />
+    </ItemGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="System.CommandLine" Version="2.0.12" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>nase</ToolCommandName>
+        <PackageId>Nase.Cli</PackageId>
+        <Version>0.1.0</Version>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <PackageOutputPath>../../artifacts</PackageOutputPath>
+    </PropertyGroup>
 
 </Project>

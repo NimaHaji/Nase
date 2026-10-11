@@ -28,7 +28,8 @@ public sealed class Lexer
             ["VARCHAR"] = TokenKind.Varchar,
             ["NVARCHAR"] = TokenKind.Nvarchar,
             ["DECIMAL"] = TokenKind.Decimal,
-            ["DATETIME2"] = TokenKind.DateTime2
+            ["DATETIME2"] = TokenKind.DateTime2,
+            ["CONSTRAINT"]=TokenKind.Constraint
         };
 
     public Lexer(string source)
@@ -48,7 +49,14 @@ public sealed class Lexer
             int start = _position;
             int line = _line;
             int column = _column;
+
             char current = Advance();
+
+            if (current == '[')
+            {
+                ReadBracketedIdentifier(start, line, column);
+                continue;
+            }
 
             if (char.IsLetter(current) || current == '_' || current == '@')
             {
@@ -116,6 +124,45 @@ public sealed class Lexer
             start,
             line,
             column);
+    }
+
+    private void ReadBracketedIdentifier(int start, int line, int column)
+    {
+        var identifier = new System.Text.StringBuilder();
+
+        while (!IsAtEnd)
+        {
+            char current = Advance();
+
+            if (current != ']')
+            {
+                identifier.Append(current);
+                continue;
+            }
+
+            // SQL Server escapes a closing bracket as two brackets: ]]
+            if (!IsAtEnd && Peek() == ']')
+            {
+                Advance();
+                identifier.Append(']');
+                continue;
+            }
+
+            _tokens.Add(new Token(
+                TokenKind.Identifier,
+                identifier.ToString(),
+                line,
+                column));
+
+            return;
+        }
+
+        // The closing bracket was missing.
+        _tokens.Add(new Token(
+            TokenKind.Unknown,
+            _source[start.._position],
+            line,
+            column));
     }
 
     private void ReadString(int start, int line, int column)
