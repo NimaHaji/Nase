@@ -1,39 +1,10 @@
-﻿using Nase.Core.Semantics;
-using Nase.Core.Syntax;
-using Nase.FrontEnd.Lexing;
+﻿using Nase.Cli.Commands;
+using System.CommandLine;
 
-var source = """
-             CREATE TABLE Users (
-                 Id INT NOT NULL
-             );
+var rootCommand = new RootCommand(
+    "Nase — Database Schema Compiler");
 
-             CREATE TABLE dbo.Users (
-                 Id INT NOT NULL
-             );
-             """;
+rootCommand.Subcommands.Add(CheckCommand.Create());
+rootCommand.Subcommands.Add(DiagramCommand.Create());
 
-var lexer = new Lexer(source);
-var tokens = lexer.Tokenize();
-
-var parser = new Parser(tokens);
-var schema = parser.ParseSchema();
-
-Console.WriteLine($"Parsed tables: {schema.Tables.Count}");
-
-var analyzer = new SemanticAnalyzer();
-var result = analyzer.Analyze(schema);
-
-if (result.IsValid)
-{
-    Console.WriteLine("Semantic Analysis: Passed");
-}
-else
-{
-    Console.WriteLine("Semantic Analysis: Failed");
-
-    foreach (var diagnostic in result.Diagnostics)
-    {
-        Console.WriteLine(
-            $"{diagnostic.Code}: {diagnostic.Message}");
-    }
-}
+return await rootCommand.Parse(args).InvokeAsync();
