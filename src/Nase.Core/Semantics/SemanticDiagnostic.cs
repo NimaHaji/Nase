@@ -3,3 +3,4 @@
 public sealed record SemanticDiagnostic(
     string Code,
     string Message);
+
