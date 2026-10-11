@@ -108,5 +108,37 @@ public class ParserTests
         Assert.Throws<InvalidOperationException>(
             () => parser.ParseCreateTable());
     }
+    
+    
+    [Fact]
+    public void ParseSchema_WhenMultipleTablesExist_ReturnsAllTables()
+    {
+        // Arrange
+        const string sql = """
+                           CREATE TABLE dbo.Users (
+                               Id INT NOT NULL
+                           );
+
+                           CREATE TABLE dbo.Orders (
+                               Id INT NOT NULL,
+                               UserId INT NOT NULL
+                           );
+                           """;
+
+        var lexer = new Lexer(sql);
+        var parser = new Parser(lexer.Tokenize());
+
+        // Act
+        SchemaNode schema = parser.ParseSchema();
+
+        // Assert
+        Assert.Equal(2, schema.Tables.Count);
+
+        Assert.Equal("Users", schema.Tables[0].TableName);
+        Assert.Equal("dbo", schema.Tables[0].SchemaName);
+
+        Assert.Equal("Orders", schema.Tables[1].TableName);
+        Assert.Equal("dbo", schema.Tables[1].SchemaName);
+    }
 
 }

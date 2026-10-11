@@ -62,13 +62,24 @@ public sealed class Parser
 
         Expect(TokenKind.RightParenthesis);
         Match(TokenKind.Semicolon);
-        Expect(TokenKind.EndOfFile);
 
         return new CreateTableNode(
             schemaName,
             tableName,
             columns,
             constraints);
+    }
+    
+    public SchemaNode ParseSchema()
+    {
+        var tables = new List<CreateTableNode>();
+
+        while (Current.Kind != TokenKind.EndOfFile)
+        {
+            tables.Add(ParseCreateTable());
+        }
+
+        return new SchemaNode(tables);
     }
 
     private ColumnDefinitionNode ParseColumnDefinition()
