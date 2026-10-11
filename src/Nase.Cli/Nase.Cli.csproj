@@ -5,6 +5,7 @@
     <ProjectReference Include="..\Nase.FrontEnd\Nase.FrontEnd.csproj" />
     <ProjectReference Include="..\Nase.SqlServer\Nase.SqlServer.csproj" />
     <ProjectReference Include="..\Nase.Diagrams\Nase.Diagrams.csproj" />
+    <ProjectReference Include="..\Nase.CodeGen.Svg\Nase.CodeGen.Svg.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
