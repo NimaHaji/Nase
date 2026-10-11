@@ -1,5 +1,13 @@
 ﻿# Nase
 
+<p align="center">
+  <img
+    src="assets/branding/NaseLogo-Rounded.png"
+    alt="Nase Logo"
+    width="180"
+  >
+</p>
+
 **Nase** is a database schema compiler built with C# and .NET 10. It parses a supported subset of SQL Server DDL, validates database schemas, and generates SVG diagrams.
 
 Nase is currently an **MVP** focused on implementing a real compiler pipeline with a clear, extensible architecture.
